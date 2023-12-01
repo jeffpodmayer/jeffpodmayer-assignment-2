@@ -6,36 +6,40 @@ import java.util.Scanner;
 public class PlayGame {
 
 	public static void main(String[] args) {
-		Random randomNumber = new Random();
+		Random randomizer = new Random();
 		Scanner scanner = new Scanner(System.in);
-		
-		int random = randomNumber.nextInt(100) + 1;
-		
-		System.out.println("Pick a number between 1 and 100: ");
-		int guess = scanner.nextInt();
 
-			for (int i = 0; i < 5; i++) {
-				if (guess > 100 || guess < 1) {
-					System.out.println("Your guess is not between 1 and 100, please try again.");
-					guess = scanner.nextInt();
-					i--;
-				} else if (guess == random) {
-					System.out.println("You win!");
-					scanner.close();
-					break;
-				} else if (i == 4){
-					System.out.println("You lose, the number to guess was " + random);
-				} else if (guess < random) {
+		int randomNumber = randomizer.nextInt(100) + 1;
+
+		int guess = 0;
+		int guessCtr = 0;
+
+		while (guessCtr < 5) {
+			System.out.println("Pick a number between 1 and 100: ");
+			guess = scanner.nextInt();
+
+			if (guess > 100 || guess < 1) {
+				System.out.println("Your guess is not between 1 and 100, please try again.");
+				guess = scanner.nextInt();
+				continue;
+			}
+			
+			if (guess == randomNumber) {
+				System.out.println("You win!");
+				break;
+			} else if (guessCtr < 4) {
+				if (guess < randomNumber) {
 					System.out.println("Please pick a higher number: ");
-					guess = scanner.nextInt();
-				} else if (guess > random) {
+				} else if (guess > randomNumber) {
 					System.out.println("Please pick a lower number: ");
-					guess = scanner.nextInt();
-				} 
-			}			
-	    }
-   }
+				}
+			}
+			guessCtr++;
+		}
+		if (guess != randomNumber) {
+			System.out.println("You lose, the number to guess was " + randomNumber);
+		}
+		scanner.close();
 		
-		
- 
-
+	}
+}
